@@ -1,8 +1,8 @@
 ## Test
 ## Signup
-![Signup page](public/results/signup.png) 
+![Signup page](public/results/Signup.png) 
 ## Signin
-![Signin page](public/results/signin.png) 
+![Signin page](public/results/Signin.png) 
 
 ![Signin page](public/results/checkDB.png) 
 ## Home Page
