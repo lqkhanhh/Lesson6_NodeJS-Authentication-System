@@ -1,20 +1,24 @@
-import express from "express"; // Importing express for the web framework
-import bodyParser from "body-parser"; // Importing bodyParser for parsing request bodies
-import ejsLayouts from "express-ejs-layouts"; // Importing express-ejs-layouts for layout support
-import path from "path"; // Importing express-ejs-layouts for layout support
-import dotenv from "dotenv"; // Importing dotenv to load environment variables
-import session from "express-session"; // Importing express-session for session management
-import passport from "passport"; // Importing passport for authentication
-import { Strategy as GoogleStrategy } from "passport-google-oauth20"; // Importing Google OAuth 2.0 strategy for passport
+import express from "express"; 
+import bodyParser from "body-parser"; 
+import ejsLayouts from "express-ejs-layouts"; 
+import path from "path"; 
+import dotenv from "dotenv"; 
+import session from "express-session"; 
+import passport from "passport"; 
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
-import { connectUsingMongoose } from "./config/mongodb.js"; // Importing MongoDB connection function
-import router from "./routes/routes.js"; // Importing main application routes
-import authrouter from "./routes/authRoutes.js"; // Importing authentication routes
+import { connectUsingMongoose } from "./config/mongodb.js"; 
+import router from "./routes/routes.js"; 
+import authrouter from "./routes/authRoutes.js"; 
 
-dotenv.config(); // Loading environment variables from .env file
-const app = express(); // Initializing express application
+dotenv.config(); 
+const app = express(); 
 
-//SESSION
+// =====================
+// MIDDLEWARES
+// =====================
+
+// Session middleware
 app.use(
   session({
     secret: "SecretKey",
@@ -24,14 +28,25 @@ app.use(
   })
 );
 
-//MIDDLEWARE
+// Body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//Passport
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Middleware thêm Student Info vào tất cả các page
+// **Đặt sau session, passport, trước routes**
+app.use((req, res, next) => {
+  res.locals.studentID = "22689261"; 
+  res.locals.fullName = "Le Quoc Khanh"; 
+  next();
+});
+
+// =====================
+// Passport Google Strategy
+// =====================
 passport.use(
   new GoogleStrategy(
     {
@@ -55,23 +70,38 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+// =====================
 // Set Templates
-app.set("view engine", "ejs"); // Define template engine
-app.use(ejsLayouts); // Use base template
-app.set("views", path.join(path.resolve(), "views")); // Define template directory
+// =====================
+app.set("view engine", "ejs"); 
+app.use(ejsLayouts); 
+app.set("views", path.join(path.resolve(), "views")); 
 
+// =====================
 // DB Connection
+// =====================
 connectUsingMongoose();
 
-//ROUTES
+// =====================
+// ROUTES
+// =====================
+
+// Homepage render home.ejs
 app.get("/", (req, res) => {
-  res.send("Hey Ninja ! Go to /user/signin for the login page.");
+  res.render("home", { title: "Home Page" }); 
 });
+
+// Mount routers
 app.use("/user", router);
 app.use("/auth", authrouter);
+
+// Static files
 app.use(express.static("public"));
 
-//LISTEN
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+// =====================
+// START SERVER
+// =====================
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

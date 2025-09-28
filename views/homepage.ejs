@@ -1,21 +1,31 @@
-<section>
-    <h1><strong>Welcome to the Home Page</strong></h1>
-    <div>
-        <button class="btn btn-light" onclick="signOut()">Sign Out</button>
-        <button class="btn btn-light" onclick="resetPassword()">Change Password</button>
-    </div>  
+<section class="mt-4 p-3 text-center">
+  <h1><strong>Welcome to the Home Page</strong></h1>
+
+  <div class="mt-3">
+    <button class="btn btn-danger mr-2" onclick="signOut()">Sign Out</button>
+    <button class="btn btn-primary" onclick="resetPassword()">Change Password</button>
+  </div>
+
+  <div class="mt-4">
+    <p>
+      <a href="/user/forgot-password" class="btn btn-link">Forgot Password?</a>
+    </p>
+  </div>
 </section>
 
-    <script>
-        // Function to handle sign-out
-        function signOut() {
-            // Perform sign-out logic (e.g., redirect to sign-out route)
-            window.location.href = "/user/signout";
-        }
+<script>
+  // Function to handle sign-out
+  function signOut() {
+    window.location.href = "/user/signout";
+  }
 
-        // Function to handle reset password
-        function resetPassword() {
-            // Perform reset password logic (e.g., redirect to reset password route)
-            window.location.href = "/user/change-password";
-        }
-    </script>
+  // Function to handle reset password
+  function resetPassword() {
+    window.location.href = "/user/change-password";
+  }
+</script>
+
+<%
+// Render the homepage
+res.render("homepage", { /* dữ liệu truyền vào nếu có */ });
+%>

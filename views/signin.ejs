@@ -11,10 +11,7 @@
       placeholder="Password"
       required
     /><br /><br />
-    <div
-      class="g-recaptcha"
-      data-sitekey="6LflLRIqAAAAAHrbmeUx3WThRxp7On8iAQQOIQWH"
-    ></div>
+    <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
     <button
       type="submit"
       class="btn btn-light"
@@ -31,3 +28,11 @@
   
   <p><strong>Don't have an account?</strong> &nbsp; <a href="/user/signup"><strong>Sign up</strong></a></p>
 </section>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcIh9crAAAAADyL_GbY_ixtMi1nJwtl25tmHOox"></script>
+<script>
+  grecaptcha.ready(function() {
+    grecaptcha.execute('6LcIh9crAAAAADyL_GbY_ixtMi1nJwtl25tmHOox', {action: 'signin'}).then(function(token) {
+      document.getElementById('g-recaptcha-response').value = token;
+    });
+  });
+</script>

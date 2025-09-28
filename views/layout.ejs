@@ -11,7 +11,6 @@
     />
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
-      /* Background image style */
       body {
         background-image: url("/cn.png");
         background-size: contain;
@@ -25,35 +24,31 @@
         color: #fff !important;
       }
 
+      .navbar-text {
+        color: white;
+        font-weight: bold;
+      }
+
       .main-content {
-        background: rgba(
-          0,
-          0,
-          0,
-          0.5
-        ); /* Add a semi-transparent background to main content for readability */
+        background: rgba(0, 0, 0, 0.5);
         padding: 20px;
         border-radius: 5px;
         margin-left: 50px;
       }
-      h1,
-      h2,
-      p {
+
+      h1, h2, p {
         color: white;
       }
+
       input {
         border: 3px solid rgb(60, 63, 63);
         border-radius: 5px;
       }
+
       section {
         padding-left: 20px;
         backdrop-filter: blur(3px);
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.25
-        ); /* Adjust the transparency as needed */
+        background-color: rgba(255, 255, 255, 0.25);
         border: 1px solid rgba(255, 255, 255, 0.01);
         border-radius: 16px;
         display: inline-block;
@@ -73,13 +68,19 @@
           <a class="navbar-brand mx-auto" href="#">
             <strong>NodeJS Authentication System</strong>
           </a>
+          <!-- Student Info hiển thị bên phải navbar -->
+          <span class="navbar-text ml-auto">
+            Student ID: <%= studentID %> | Full Name: <%= fullName %>
+          </span>
         </div>
       </nav>
     </header>
-    <main>
-      <!-- This is where content from other pages will be injected -->
+
+    <main class="container mt-4">
+      <!-- Nội dung page sẽ được inject tại đây -->
       <%- body %>
     </main>
+
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
